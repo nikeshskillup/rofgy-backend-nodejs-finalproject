@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 const SECRET_KEY = 'your_secret_key';
 
 mongoose.set('strictQuery', false);
-const uri = "mongodb://root:Xqt7qGfxH9WURw5bar3l03N4@172.21.112.129:27017";
+const uri = "mongodb://root:89uhwooGL0IwRPvDmthqe19e@172.21.161.249:27017";
 mongoose.connect(uri, { dbName: 'SocialDB' });
 
 const User = mongoose.model('User', { username: String, email: String, password: String });

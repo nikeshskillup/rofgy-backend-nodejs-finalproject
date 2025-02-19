@@ -132,7 +132,6 @@
         });
         const data = await response.json();
         if (response.ok) {
-          alert(data.message);
           document.getElementById('text').value = '';
           getPosts(); // refresh the list
         } else {
@@ -209,7 +208,6 @@
         });
         const data = await response.json();
         if (response.ok) {
-          alert(data.message);
           getPosts(); // refresh list
         } else {
           alert(data.message);
@@ -226,7 +224,6 @@
         const response = await fetch(`/posts/${postId}`, { method: 'DELETE' });
         const data = await response.json();
         if (response.ok) {
-          alert(data.message);
           getPosts();
         } else {
           alert(data.message);
