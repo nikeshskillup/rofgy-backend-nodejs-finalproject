@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 const SECRET_KEY = 'your_secret_key';
 
 mongoose.set('strictQuery', false);
-const uri = "mongodb://root:89uhwooGL0IwRPvDmthqe19e@172.21.161.249:27017";
+const uri = "mongodb://root:N1JsIjx5dnQI9EANjGhthMX8@172.21.141.222:27017";
 mongoose.connect(uri, { dbName: 'SocialDB' });
 
 const User = mongoose.model('User', { username: String, email: String, password: String });
@@ -58,6 +58,7 @@ app.post('/register', async (req, res) => {
         await newUser.save();
         const token = jwt.sign({ userId: newUser._id, username: newUser.username }, SECRET_KEY, { expiresIn: '1h' });
         req.session.token = token;
+        
         res.redirect(`/index?username=${newUser.username}`);
     } catch (error) {
         console.error(error);
@@ -72,6 +73,7 @@ app.post('/login', async (req, res) => {
         if (!user) return res.status(401).json({ message: 'Invalid credentials' });
         const token = jwt.sign({ userId: user._id, username: user.username }, SECRET_KEY, { expiresIn: '1h' });
         req.session.token = token;
+        
         res.redirect(`/index?username=${user.username}`);
     } catch (error) {
         console.error(error);

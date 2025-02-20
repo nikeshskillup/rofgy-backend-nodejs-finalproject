@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Create and Manage Posts</title>
   <style>
     body {
@@ -114,7 +114,10 @@
   <div class="pagination" id="pagination"></div>
 
   <script>
-    // On page load, fetch the posts
+    const postsPerPage = 3;
+    let currentPage = 1;
+
+    // Fetch posts on page load
     document.addEventListener('DOMContentLoaded', () => {
       getPosts();
     });
@@ -133,7 +136,8 @@
         const data = await response.json();
         if (response.ok) {
           document.getElementById('text').value = '';
-          getPosts(); // refresh the list
+          currentPage = 1; // Reset to first page after new post
+          getPosts(); // Refresh list
         } else {
           alert(data.message);
         }
@@ -158,11 +162,25 @@
       }
     }
 
-    // Render the posts into the DOM
+    // Render the posts into the DOM with pagination
     function renderPosts(posts) {
       const postList = document.getElementById('postList');
+      const pagination = document.getElementById('pagination');
       postList.innerHTML = '';
-      posts.forEach(post => {
+
+      if (posts.length === 0) {
+        postList.innerHTML = '<p>No posts available.</p>';
+        pagination.innerHTML = '';
+        return;
+      }
+
+      // Calculate slice indices for the current page
+      const startIndex = (currentPage - 1) * postsPerPage;
+      const endIndex = startIndex + postsPerPage;
+      const paginatedPosts = posts.slice(startIndex, endIndex);
+
+      // Render posts for the current page
+      paginatedPosts.forEach(post => {
         const postDiv = document.createElement('div');
         postDiv.className = 'post';
 
@@ -185,9 +203,25 @@
         postDiv.appendChild(postText);
         postDiv.appendChild(editButton);
         postDiv.appendChild(deleteButton);
-
         postList.appendChild(postDiv);
       });
+
+      // Create pagination buttons
+      const totalPages = Math.ceil(posts.length / postsPerPage);
+      pagination.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.onclick = () => {
+          currentPage = i;
+          renderPosts(posts);
+        };
+        // Highlight the active page button
+        if (i === currentPage) {
+          pageButton.style.fontWeight = 'bold';
+        }
+        pagination.appendChild(pageButton);
+      }
     }
 
     // Prompt for editing and then update the post
@@ -208,7 +242,7 @@
         });
         const data = await response.json();
         if (response.ok) {
-          getPosts(); // refresh list
+          getPosts(); // Refresh list
         } else {
           alert(data.message);
         }
@@ -235,7 +269,7 @@
     }
 
     // Logout by redirecting to the logout endpoint
-    function logout(){
+    function logout() {
       window.location.href = '/logout';
     }
   </script>
