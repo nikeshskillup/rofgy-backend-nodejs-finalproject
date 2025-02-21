@@ -1227,26 +1227,26 @@ This HTML code is the main page of a Social Media Dashboard App.
 - **Creating a Post (POST /post)**
   - The `createPost()` function sends a POST request to `/post` with the post content.
   - The backend handles authentication and saves the post in MongoDB.
-  - After a successful post, the frontend clears the input, resets to the first page, and refreshes the post list using `getPosts()`. ✅
+  - After a successful post, the frontend clears the input, resets to the first page, and refreshes the post list using `getPosts()`. 
 
 - **Fetching Posts (GET /posts)**
-  - `getPosts()` fetches all posts belonging to the logged-in user and calls `renderPosts()` to display them. ✅
+  - `getPosts()` fetches all posts belonging to the logged-in user and calls `renderPosts()` to display them. 
 
 - **Updating a Post (PUT /posts/:postId)**
   - `editPost()` prompts the user for new content and, if changed, sends an update request using `updatePost()`.
-  - The backend updates the post in MongoDB and returns a success message, after which the post list is refreshed. ✅
+  - The backend updates the post in MongoDB and returns a success message, after which the post list is refreshed. 
 
 - **Deleting a Post (DELETE /posts/:postId)**
   - `deletePost()` sends a DELETE request to `/posts/:postId`.
-  - The backend deletes the post and returns a success message, and the frontend refreshes the list of posts. ✅
+  - The backend deletes the post and returns a success message, and the frontend refreshes the list of posts. 
 
 - **Pagination**
   - Uses `postsPerPage` (set to 3) and `currentPage` to manage post display.
   - `renderPosts()` slices posts based on the current page and generates pagination buttons.
-  - Clicking a pagination button updates `currentPage` and re-renders posts. ✅
+  - Clicking a pagination button updates `currentPage` and re-renders posts. 
 
 - **Logout (/logout)**
-  - The "Logout" button triggers the `logout()` function, redirecting to `/logout` and clearing the session. ✅
+  - The "Logout" button triggers the `logout()` function, redirecting to `/logout` and clearing the session. 
 
 
 5. In `app.js` replace the JSON response on successful registration, with the following.
